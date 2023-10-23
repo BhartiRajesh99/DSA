@@ -6,6 +6,7 @@ typedef struct Node
     struct Node *next;
     struct Node *prev;
 }Node;
+// typedef Node Node; -> Another way of changing struct Node to Node
 void insertAtEnd(Node **head,int v)
 {
     Node *temp=(Node*)malloc(sizeof(Node));
@@ -40,40 +41,35 @@ void insertAtMiddle(Node **head,int v,int position)
     Node *it=*head;
     if(position==1)
     {
-        if(*head==NULL)
-            *head=temp;
-        else
+        if(*head!=NULL)
         {
             temp->next=*head;
             (*head)->prev=temp;
-            *head=temp;
         }
+        *head=temp;
     }
     else
     {
+        int flag=0;
         while(position-2)
         {
-            --position;
             it=it->next;
-            if(!(it->next))
+            if(!it)
             {
-                printf("Position doesn't exist....!!!!\n");
-                return;
+                flag=1;
+                break;
             }
+            --position;
         }
-        if(it->next->next==NULL)
+        if(flag || !(it->next))
         {
-            Node *t=it->next;
-            t->next=temp;
-            temp->prev=t;
+            printf("Position doesn't exist....!!!!\n");
+            return;
         }
-        else
-        {
-            temp->next=it->next;
-            temp->prev=it;
-            it->next=temp;
-            temp->next->prev=temp;
-        }
+        temp->next=it->next;
+        temp->prev=it;
+        it->next=temp;
+        temp->next->prev=temp;
     }
 }
 void insertAtBegin(Node **head,int v)
@@ -86,14 +82,12 @@ void insertAtBegin(Node **head,int v)
     }
     temp->next=temp->prev=NULL;
     temp->v=v;
-    if(*head==NULL)
-        *head=temp;
-    else
+    if(*head!=NULL)
     {
         temp->next=*head;
         (*head)->prev=temp;
-        *head=temp;
     }
+    *head=temp;
 }
 void Delete(Node **head,int position)
 {
@@ -105,42 +99,34 @@ void Delete(Node **head,int position)
     Node *it=*head;
     if(position==1)
     {
-        if(it->next==NULL)
-        {
-            *head=NULL;
-            free(it);
-        }
-        else
-        {
-            *head=it->next;
+        *head=it->next;
+        if(it->next)
             (*head)->prev=it->prev;
-            free(it);
-        }
+        free(it);
     }
     else
     {
+        int flag=0;
         while(position-2)
         {
-            --position;
             it=it->next;
-            if(!(it->next))
+            if(!it)
             {
-                printf("Position doesn't exist....!!!!\n");
-                return;
+                flag=1;
+                break;
             }
+            --position;
         }
-        if(it->next->next==NULL)
+        if(flag || !(it->next))
         {
-            free(it->next);
-            it->next=NULL;
+            printf("Position doesn't exist....!!!!\n");
+            return;
         }
-        else
-        {
-            Node *t=it->next;
-            it->next=t->next;
+        Node *t=it->next;
+        it->next=t->next;
+        if(t->next)
             t->next->prev=it;
-            free(t);
-        }
+        free(t);
     }
 }
 void display(Node *head)

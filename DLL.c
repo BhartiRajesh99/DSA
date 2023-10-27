@@ -27,6 +27,7 @@ void insertAtEnd(Node **head,int v)
         it->next=temp;
         temp->prev=it;
     }
+    printf("Node inserted....!!!!\n");
 }
 void insertAtMiddle(Node **head,int v,int position)
 {
@@ -47,6 +48,10 @@ void insertAtMiddle(Node **head,int v,int position)
             (*head)->prev=temp;
         }
         *head=temp;
+    }
+    else if(position<=0){
+        printf("Position doesn't exist....!!!!\n");
+        return;
     }
     else
     {
@@ -71,6 +76,7 @@ void insertAtMiddle(Node **head,int v,int position)
         it->next=temp;
         temp->next->prev=temp;
     }
+    printf("Node inserted....!!!!\n");
 }
 void insertAtBegin(Node **head,int v)
 {
@@ -88,6 +94,7 @@ void insertAtBegin(Node **head,int v)
         (*head)->prev=temp;
     }
     *head=temp;
+    printf("Node inserted....!!!!\n");
 }
 void Delete(Node **head,int position)
 {
@@ -128,6 +135,7 @@ void Delete(Node **head,int position)
             t->next->prev=it;
         free(t);
     }
+    printf("Node deleted....!!!!\n");
 }
 void display(Node *head)
 {

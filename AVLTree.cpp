@@ -3,7 +3,6 @@ using namespace std;
 class AVLTree{
     public:
         int data;
-        int height;
         AVLTree* left;
         AVLTree* right;
 
